@@ -9,7 +9,7 @@ from allennlp.data import Vocabulary
 from allennlp.models.model import Model
 from allennlp.modules import Highway
 from allennlp.modules import Seq2SeqEncoder, SimilarityFunction, TimeDistributed, TextFieldEmbedder
-from allennlp.modules.matrix_attention.legacy_matrix_attention import LegacyMatrixAttention
+from allennlp.modules.matrix_attention import MatrixAttention
 from allennlp.nn import util, InitializerApplicator, RegularizerApplicator
 from allennlp.training.metrics import BooleanAccuracy, CategoricalAccuracy
 
@@ -73,7 +73,7 @@ class BidirectionalAttentionFlow(Model):
         text_field_embedder: TextFieldEmbedder,
         num_highway_layers: int,
         phrase_layer: Seq2SeqEncoder,
-        similarity_function: SimilarityFunction,
+        matrix_attention: MatrixAttention,
         modeling_layer: Seq2SeqEncoder,
         span_end_encoder: Seq2SeqEncoder,
         dropout: float = 0.2,
@@ -88,7 +88,7 @@ class BidirectionalAttentionFlow(Model):
             Highway(text_field_embedder.get_output_dim(), num_highway_layers)
         )
         self._phrase_layer = phrase_layer
-        self._matrix_attention = LegacyMatrixAttention(similarity_function)
+        self._matrix_attention = matrix_attention
         self._modeling_layer = modeling_layer
         self._span_end_encoder = span_end_encoder
 
