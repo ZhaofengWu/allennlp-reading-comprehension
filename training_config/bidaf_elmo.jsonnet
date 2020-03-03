@@ -89,10 +89,11 @@
     },
     "dropout": 0.2
   },
-  "iterator": {
-    "type": "bucket",
-    "sorting_keys": [["passage", "num_tokens"], ["question", "num_tokens"]],
-    "batch_size": 40
+  "data_loader": {
+    "batch_sampler": {
+      "type": "bucket",
+      "batch_size": 40
+    }
   },
 
   "trainer": {
